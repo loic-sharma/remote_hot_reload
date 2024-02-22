@@ -216,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  rfw:
+    dependency: "direct main"
+    description:
+      name: rfw
+      sha256: "91887af776a2d3b8508820a4be945bc06b435086e35546cdfc8fc79a7376d116"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.23"
   sky_engine:
     dependency: transitive
     description: flutter

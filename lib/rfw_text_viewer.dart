@@ -23,9 +23,9 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
 
   @override
   void initState() {
+    super.initState();
     textController.text = rfw.text;
     rfw.addListener(_onRfwChanged);
-    super.initState();
   }
 
   @override
