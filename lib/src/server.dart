@@ -9,6 +9,11 @@ Future<void> runRemoteAppServer(Widget app) async {
       child: app
     ),
   );
+
+  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    final rfwText = debugDumpRfwString();
+    firebase.updateRfw(rfwText);
+  });
 }
 
 class _RemoteAppServer extends StatefulWidget {
@@ -29,7 +34,7 @@ class _RemoteAppServerState extends State<_RemoteAppServer> {
     super.reassemble();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final rfwText = dumpRfw();
+      final rfwText = debugDumpRfwString();
       firebase.updateRfw(rfwText);
     });
   }

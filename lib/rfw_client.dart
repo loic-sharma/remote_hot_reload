@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/logic.dart';
 import 'package:rfw/formats.dart' show parseLibraryFile;
 import 'package:rfw/rfw.dart';
 
-void main() {
-  unawaited(firebase.start());
+void main() async {
+  await firebase.start();
 
   runApp(const RfwClient());
 }

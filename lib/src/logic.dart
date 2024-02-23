@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:remote_hot_reload/firebase_options.dart';
 
 final rfw = RfwController();
-final firebase = FirebaseFake();
+final firebase = FirebaseWorker();
 
 class FirebaseFake {
   Future<void> start() async {
@@ -30,12 +31,11 @@ widget root = Text(
 }
 
 class FirebaseWorker {
-  final _rfwTextRef = FirebaseDatabase.instance.ref("rfwText");
+  DatabaseReference get _rfwTextRef => FirebaseDatabase.instance.ref("rfwText");
 
   Future<void> start() async {
     await Firebase.initializeApp(
-      // TODO
-      // options: DefaultFirebaseOptions.currentPlatform,
+      options: DefaultFirebaseOptions.currentPlatform,
     );
 
     // Read the initial RFW text value.
