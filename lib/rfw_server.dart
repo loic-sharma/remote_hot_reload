@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/server.dart';
 
-void main() async {
+Future<void> main() async {
   await runRemoteAppServer(
     MaterialApp(
       theme: ThemeData(

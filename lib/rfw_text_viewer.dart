@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/logic.dart';
 
-void main() async {
+Future<void> main() async {
   await firebase.start();
 
   runApp(const RfwTextViewer());

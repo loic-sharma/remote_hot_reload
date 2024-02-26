@@ -3,7 +3,7 @@ import 'package:remote_hot_reload/src/logic.dart';
 import 'package:rfw/formats.dart' show parseLibraryFile;
 import 'package:rfw/rfw.dart';
 
-void main() async {
+Future<void> main() async {
   await firebase.start();
 
   runApp(const RfwClient());
