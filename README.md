@@ -175,6 +175,9 @@ Combined, these make RFW text harder to learn and write than Dart.
 
 ## Implementation details
 
+> [!WARNING]
+> This is an early prototype. Expect implementation details to change.
+
 The implementation mirrors how DevTool's generates its widget summary
 tree. It starts from the `WidgetsBinding.instance.rootElement`, recurses down,
 and serializes "local" widgets. See
@@ -185,6 +188,10 @@ widget needs logic to map the widget to its RFW representation. For example:
 
 1. Here's how the prototype serializes a `SizedBox`: [`loic-sharma/flutter@088cc1e/packages/flutter/lib/src/widgets/binding.dart#L1384-L1387`](https://github.com/loic-sharma/flutter/blob/088cc1e582c8de8b840e5eaedf07ee2430dd36cb/packages/flutter/lib/src/widgets/binding.dart#L1384-L1387)
 2. Here's how RFW deserializes a `SizedBox`: [`flutter/packages@930318/packages/rfw/lib/src/flutter/core_widgets.dart#L607-L613`](https://github.com/flutter/packages/blob/930318a82735042d5dd0d9028a2e66826aaa4589/packages/rfw/lib/src/flutter/core_widgets.dart#L607-L613)
+
+> [!NOTE]
+> The logic to (de)serialize widgets and RFW is mostly basic mapping logic.
+> In the future, Dart macros could reduce this boilerplate.
 
 Finally, the server app saves the updated RFW text to Firebase on hot reload
 events. See [`runRemoteApp`](https://github.com/loic-sharma/remote_hot_reload/blob/4c00cb530b4c9bc2f09990b352aa7f808c7b69f6/lib/src/server.dart#L4-L17) and its widget's
