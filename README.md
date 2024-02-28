@@ -1,7 +1,6 @@
 # Remote hot reload
 
-This prototypes remote hot reload: edits to the "server" Flutter app 
-update the "client" app.
+Remote hot reload: changing the "server" app's Dart code updates clients.
 
 The "server" app is a regular Flutter app that swapped its `runApp`
 with `runRemoteAppServer`:
