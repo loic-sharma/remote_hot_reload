@@ -51,7 +51,7 @@ Flutter's most upvoted issue is pushing out-of-store updates to apps:
 There are two solution categories:
 
 1. **Code push** - Allows developers to push app updates directly to users' devices.
-   See [shorebird.dev](https://shorebird.dev/)'s excellent Flutter solution.
+   See [shorebird.dev](https://shorebird.dev/).
 2. **Server-driven UI** - Allows developers to _configure_ UIs remotely.
    For Flutter, that's done using
    [Remote Flutter Widgets ("RFW")](https://pub.dev/packages/rfw).
@@ -63,7 +63,7 @@ their user experience.
 
 RFW's configuration language is harder to learn and write than Dart.
 
-This prototype examines if Dart could be used to configure RFW.
+This prototype examines if Dart can be used to configure RFW.
 
 ### RFW text
 
@@ -97,11 +97,11 @@ RFW text is similar to Dart but has some subtle differences. For example:
 
 1. Dynamically typed, similar to JavaScript. You don't get compilation errors if
    you access members that do not exist.
-2. Introduces `widget` syntax that supports state
+2. Introduces a novel `widget` syntax that also supports state
 3. No `if` expressions. You use `switch` instead
 4. No string interpolation. The `Text` widget accepts a list of strings
-5. For and switch statements don't need `(` or `)`
-6. For loops use `:` instead of `{` and `}`
+5. For and switch expressions don't need `(` or `)`
+6. For expressions use `:` instead of `{` and `}`
 7. No enums. You use strings instead
 
 Since RFW text is a new language, it does not have strong tooling yet. You don't
