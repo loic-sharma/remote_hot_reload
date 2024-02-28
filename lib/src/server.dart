@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/logic.dart';
 
-Future<void> runRemoteAppServer(Widget app) async {
+Future<void> runRemoteApp(Widget app) async {
   await firebase.start();
 
   runApp(

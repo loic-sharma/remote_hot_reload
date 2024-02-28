@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/server.dart';
 
 Future<void> main() async {
-  await runRemoteAppServer(
+  await runRemoteApp(
     MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

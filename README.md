@@ -3,11 +3,11 @@
 Remote hot reload: changing the "server" app's Dart code updates clients.
 
 The "server" app is a regular Flutter app that swapped its `runApp`
-with `runRemoteAppServer`:
+with `runRemoteApp`:
 
 ```dart
 Future<void> main() async {
-  await runRemoteAppServer(
+  await runRemoteApp(
     MaterialApp(
       // ...
       home: const Scaffold(
@@ -188,5 +188,5 @@ widget needs logic to map the widget to its RFW representation. For example:
 2. Here's how RFW deserializes a `SizedBox`: [`flutter/packages@930318/packages/rfw/lib/src/flutter/core_widgets.dart#L607-L613`](https://github.com/flutter/packages/blob/930318a82735042d5dd0d9028a2e66826aaa4589/packages/rfw/lib/src/flutter/core_widgets.dart#L607-L613)
 
 Finally, the server app saves the updated RFW text to Firebase on hot reload
-events. See [`runRemoteAppServer`](https://github.com/loic-sharma/remote_hot_reload/blob/4c00cb530b4c9bc2f09990b352aa7f808c7b69f6/lib/src/server.dart#L4-L17) and its widget's
+events. See [`runRemoteApp`](https://github.com/loic-sharma/remote_hot_reload/blob/4c00cb530b4c9bc2f09990b352aa7f808c7b69f6/lib/src/server.dart#L4-L17) and its widget's
 [`reassemble` method](https://github.com/loic-sharma/remote_hot_reload/blob/4c00cb530b4c9bc2f09990b352aa7f808c7b69f6/lib/src/server.dart#L33-L40).
