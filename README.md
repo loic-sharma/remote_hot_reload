@@ -94,14 +94,14 @@ widget root { showNames: true } = switch state.showNames {
 
 RFW text is similar to Dart but has some subtle differences. For example:
 
-1. Dynamically typed, similar to JavaScript. You don't get compilation errors if
+1. Dynamically typed. Similar to JavaScript, you don't get compilation errors if
    you access members that do not exist.
-2. Introduces a novel `widget` syntax that also supports state
+2. No `class`es. You use a novel `widget` syntax, with special syntax for state
 3. No `if` expressions. You use `switch` instead
-4. No string interpolation. The `Text` widget accepts a list of strings
-5. For and switch expressions don't need `(` or `)`
-6. For expressions use `:` instead of `{` and `}`
 7. No enums. You use strings instead
+4. No string interpolation. The `Text` widget accepts a list of strings
+5. `for` and `switch` expressions don't need `(` and `)`
+6. `for` expressions use `:` instead of `{` and `}`
 
 Since RFW text is a new language, it does not have strong tooling yet. You don't
 get syntax highlighting, code completion, or a language server providing rich
