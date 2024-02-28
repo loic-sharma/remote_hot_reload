@@ -1,9 +1,9 @@
 # Remote hot reload
 
-This prototypes remote hot reload: edits to the "server" app magically update
-the "client" app.
+This prototypes remote hot reload: edits to the "server" Flutter app 
+update the "client" app.
 
-The "server" app is a Flutter app that swapped its `runApp`
+The "server" app is a regular Flutter app that swapped its `runApp`
 with `runRemoteAppServer`:
 
 ```dart
@@ -38,6 +38,8 @@ class Greeter extends StatelessWidget {
 How does it work? On each hot reload, the "server" app converts its Dart widget
 tree to [RFW](https://pub.dev/packages/rfw) and then broadcasts it using
 [Firebase](https://firebase.google.com/docs/database#realtime-database).
+For more information, see the [Implementation details](#implementation-details)
+section below.
 
 ## Background
 
@@ -51,7 +53,8 @@ There are two solution categories:
 1. **Code push** - Allows developers to push app updates directly to users' devices.
    See [shorebird.dev](https://shorebird.dev/)'s excellent Flutter solution.
 2. **Server-driven UI** - Allows developers to _configure_ UIs remotely.
-   For Flutter, that's [`package:rfw`](https://pub.dev/packages/rfw)!
+   For Flutter, that's done using
+   [Remote Flutter Widgets ("RFW")](https://pub.dev/packages/rfw).
 
 These solutions complement each other - apps can use both approaches to maximize
 their user experience.
