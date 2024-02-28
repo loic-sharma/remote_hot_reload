@@ -148,9 +148,8 @@ Combined, these make RFW text harder to learn and write than Dart.
 
     2. Run the demo!
 
-       > [!NOTE]
-       > Firebase Realtime Database does not support all Flutter platforms.
-       > Target web for Windows and Linux machines.
+       > ⚠️ Firebase Realtime Database does not support all Flutter platforms.
+       > Target web on Windows and Linux machines.
 
         1. Run the client app:
 
