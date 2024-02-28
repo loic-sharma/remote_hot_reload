@@ -13,7 +13,7 @@ Future<void> main() async {
       home: const Scaffold(
         body: Column(
           children: [
-            // Supports all of Dart, including if statements and for loops!
+            // Supports all of Dart, including if and for expressions!
             for (final name in ['Foo', 'Bar'])
               // Supports custom widgets!
               Greeter(name),
