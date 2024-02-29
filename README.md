@@ -2,6 +2,8 @@
 
 Remote hot reload: changing the "server" app's Dart code updates clients.
 
+[YouTube demo video](http://www.youtube.com/watch?v=_Z9wrD4G4p0)
+
 The "server" app is a regular Flutter app that swapped its `runApp`
 with `runRemoteApp`:
 
