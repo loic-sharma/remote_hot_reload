@@ -16,7 +16,6 @@ Future<void> main() async {
             children: [
               Space(),
               Title("Hello!"),
-              Title("Amusement rides"),
               Space(),
               Rides(),
             ],
@@ -46,11 +45,13 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title,
-        style: const TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        ));
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }
 
@@ -63,9 +64,7 @@ class Rides extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (final ride in ['Magic Land', 'Cosmic Mountain', 'Animal Land'])
-          Ride(
-            ride,
-          ),
+          Ride(ride),
       ],
     );
   }
@@ -75,11 +74,9 @@ class Ride extends StatelessWidget {
   const Ride(
     this.name, {
     super.key,
-    // required this.image,
   });
 
   final String name;
-  // final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -91,18 +88,29 @@ class Ride extends StatelessWidget {
             fontSize: 20.0,
           ),
         ),
+
         const Space(),
+
         Image.network(
-          'https://source.unsplash.com/random/200x200/?${Uri.encodeComponent('roller coaster${' ' * name.length}')}',
+          _rideImage(name),
           width: 200.0,
           height: 200.0,
         ),
+
         const Space(),
+
         ElevatedButton(
           child: const Text('Reserve'),
-          onPressed: () => debugPrint('event "pressed" {"ride":$name}'),
+          onPressed: () => _reserve(name),
         ),
       ],
     );
   }
+}
+
+String _rideImage(String name)
+  => 'https://source.unsplash.com/random/200x200/?${Uri.encodeComponent('roller coaster${' ' * name.length}')}';
+
+void _reserve(String name) {
+  debugPrint('event "pressed" {"ride":$name}');
 }
