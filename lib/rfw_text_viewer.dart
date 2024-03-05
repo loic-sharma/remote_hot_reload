@@ -24,7 +24,7 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
   @override
   void initState() {
     super.initState();
-    textController.text = rfw.text;
+    textController.text = rfw.staged;
     rfw.addListener(_onRfwChanged);
   }
 
@@ -36,11 +36,11 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
   }
 
   void _onRfwChanged() {
-    textController.text = rfw.text;
+    textController.text = rfw.staged;
   }
 
-  Future<void> _save() async {
-    await firebase.updateRfw(textController.text);
+  Future<void> _deploy() async {
+    await firebase.deployRfw(textController.text);
   }
 
   @override
@@ -66,9 +66,7 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
                   maxLines: null,
                 ),
               ),
-      
               const SizedBox(height: 20.0),
-      
               ListenableBuilder(
                 listenable: rfw,
                 builder: (BuildContext context, Widget? child) {
@@ -78,7 +76,7 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   }
-      
+
                   return const SizedBox.shrink();
                 },
               ),
@@ -86,8 +84,8 @@ class _RfwTextViewerState extends State<RfwTextViewer> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _save,
-          tooltip: 'Save',
+          onPressed: _deploy,
+          tooltip: 'Deploy',
           child: const Icon(Icons.save),
         ),
       ),

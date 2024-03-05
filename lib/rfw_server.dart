@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:remote_hot_reload/src/server.dart';
 
 Future<void> main() async {
+  // RFW client app: https://remote-hot-reload.web.app/client/
+  // RFW text viewer: https://remote-hot-reload.web.app/text_viewer/
   await runRemoteApp(
     MaterialApp(
       theme: ThemeData(
@@ -13,10 +15,10 @@ Future<void> main() async {
           child: Column(
             children: [
               Space(),
-              Title('Hello!'),
-              Title("What's your favorite city?"),
+              Title("Hello!"),
+              Title("Amusement rides"),
               Space(),
-              FavoriteCities(),
+              Rides(),
             ],
           ),
         ),
@@ -44,43 +46,40 @@ class Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold,
-      )
-    );
+    return Text(title,
+        style: const TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ));
   }
 }
 
-class FavoriteCities extends StatelessWidget {
-  const FavoriteCities({super.key});
+class Rides extends StatelessWidget {
+  const Rides({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        for (final city in ['San Francisco', 'New York', 'Los Angeles'])
-          City(
-            city,
-            image: 'https://source.unsplash.com/random/200x200/?${Uri.encodeComponent(city.toLowerCase())}',
+        for (final ride in ['Magic Land', 'Cosmic Mountain', 'Animal Land'])
+          Ride(
+            ride,
           ),
       ],
     );
   }
 }
 
-class City extends StatelessWidget {
-  const City(
+class Ride extends StatelessWidget {
+  const Ride(
     this.name, {
     super.key,
-    required this.image,
+    // required this.image,
   });
 
   final String name;
-  final String image;
+  // final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +88,19 @@ class City extends StatelessWidget {
         Text(
           name,
           style: const TextStyle(
-            fontSize: 14.0,
+            fontSize: 20.0,
           ),
         ),
-
         const Space(),
-
         Image.network(
-          image,
+          'https://source.unsplash.com/random/200x200/?${Uri.encodeComponent('roller coaster${' ' * name.length}')}',
           width: 200.0,
           height: 200.0,
         ),
-
         const Space(),
-
         ElevatedButton(
-          child: Text('I like $name'),
-          onPressed: () {
-            debugDumpRfw();
-            debugPrint('TODO: event "pressed" {"city":$name}');
-          },
+          child: const Text('Reserve'),
+          onPressed: () => debugPrint('event "pressed" {"ride":$name}'),
         ),
       ],
     );

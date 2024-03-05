@@ -23,8 +23,14 @@ widget root = Text(
 ''';
   }
 
-  Future<void> updateRfw(String text) async {
-    await rfw.update(text, () async {
+  Future<void> stageRfw(String staged) async {
+    await rfw.update(staged, rfw.text, () async {
+      await Future<void>.delayed(const Duration(seconds: 1));
+    });
+  }
+
+  Future<void> deployRfw(String text) async {
+    await rfw.update(rfw.staged, text, () async {
       await Future<void>.delayed(const Duration(seconds: 1));
     });
   }
@@ -32,37 +38,52 @@ widget root = Text(
 
 class FirebaseWorker {
   DatabaseReference get _rfwTextRef => FirebaseDatabase.instance.ref("rfwText");
+  DatabaseReference get _stagedRef => FirebaseDatabase.instance.ref("staged");
 
   Future<void> start() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    // Read the initial RFW text value.
-    final snapshot = await _rfwTextRef.get();
-    if (snapshot.exists) {
-      rfw.text = snapshot.value.toString();
-    } else {
-      rfw.text = '';
-    }
+    // Read the initial RFW text values.
+    final rfwSnapshot = await _rfwTextRef.get();
+    final stagedSnapshot = await _stagedRef.get();
+    rfw.text = (rfwSnapshot.exists) ? rfwSnapshot.value.toString() : '';
+    rfw.staged = (stagedSnapshot.exists) ? stagedSnapshot.value.toString() : '';
 
-    // Listen for changes to the RFW text value.
+    // Listen for changes...
     _rfwTextRef.onValue.listen((DatabaseEvent event) {
-        final data = event.snapshot.value;
-        rfw.text = data.toString();
+      final data = event.snapshot.value;
+      rfw.text = data.toString();
+    });
+    _stagedRef.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      rfw.staged = data.toString();
     });
   }
 
-  Future<void> updateRfw(String text) async {
-    await rfw.update(text, () async {
+  Future<void> stageRfw(String staged) async {
+    await rfw.update(staged, rfw.text, () async {
+      await _stagedRef.set(staged);
+    });
+  }
+
+  Future<void> deployRfw(String text) async {
+    await rfw.update(text, text, () async {
+      await _stagedRef.set(text);
       await _rfwTextRef.set(text);
     });
   }
 }
 
 abstract interface class RfwNotifier with ChangeNotifier {
+  /// True if a deployment is underway.
   bool get updating;
 
+  /// RFW text that's staged but not deployed yet.
+  String get staged;
+
+  /// RFW text that's deployed.
   String get text;
 }
 
@@ -74,6 +95,15 @@ class RfwController with ChangeNotifier implements RfwNotifier {
   bool _updating = true;
 
   @override
+  String get staged => _staged;
+  String _staged = '';
+  set staged(String value) {
+    _updating = false;
+    _staged = value;
+    notifyListeners();
+  }
+
+  @override
   String get text => _text;
   String _text = '';
   set text(String value) {
@@ -82,13 +112,19 @@ class RfwController with ChangeNotifier implements RfwNotifier {
     notifyListeners();
   }
 
-  Future<void> update(String text, Future<void> Function() update) async {
+  Future<void> update(
+    String staged,
+    String text,
+    Future<void> Function() update,
+  ) async {
     if (_updating) {
       throw 'Update already in progress!';
     }
 
-    final previous = _text;
+    final previousStaged = _staged;
+    final previousText = _text;
     _updating = true;
+    _staged = staged;
     _text = text;
     notifyListeners();
 
@@ -99,7 +135,8 @@ class RfwController with ChangeNotifier implements RfwNotifier {
     } finally {
       if (_updating) {
         _updating = false;
-        _text = previous;
+        _staged = previousStaged;
+        _text = previousText;
         notifyListeners();
       }
     }
